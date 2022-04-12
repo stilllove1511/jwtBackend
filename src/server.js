@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 8080
 //config view engine
 configViewEngine(app)
 
+//body-parser
+app.use(express.urlencoded())
+
 //init web routes
 initWebRoutes(app)
 
