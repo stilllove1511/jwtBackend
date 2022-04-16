@@ -1,7 +1,7 @@
 const express = require('express')
 require("dotenv").config()
 
-const configViewEngine = require("./configs/viewEngine")
+const configViewEngine = require("./config/viewEngine")
 const initWebRoutes = require("./routes/web")
 
 const app = express()
