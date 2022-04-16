@@ -2,59 +2,33 @@ const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs')
 const bluebird = require('bluebird')
 
-
 const salt = bcrypt.genSaltSync(10);
-
-// const connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     database: 'jwt'
-// });
 
 const hashPassword = (userPassword) => {
     let hashPassword = bcrypt.hashSync(userPassword, salt);
     return hashPassword
 }
 
-const createNewUser = (email, password, username) => {
+const createNewUser = async (email, password, username) => {
     let hashPass = hashPassword(password)
-
-    connection.query(
-        'INSERT INTO users (email, password, username) VALUES ( ?, ?, ?)', [email, hashPass, username],
-        function (err, results, fields) {
-            if (err) {
-                console.log(err)
-            }
-        }
-    );
+    const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird })
+    const [rows, fields] = await connection.execute('INSERT INTO users (email, password, username) VALUES ( ?, ?, ?)', [email, hashPass, username])
 }
 
 const getUserList = async () => {
-    let users = []
     const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird })
+    const [rows, fields] = await connection.execute('Select * from users')
+    return rows
+}
 
-    // connection.query(
-    //     'select * from users',
-    //     function (err, results, fields) {
-    //         if (err) {
-    //             console.log(err)
-    //             return users
-    //         }
-
-    //         users = results
-    //         return users
-    //     }
-    // );
-    try {
-        const [rows, fields] = await connection.execute('Select * from users')
-        return rows
-    } catch (e) {
-
-    }
+const deleteUser = async (id) => {
+    const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird })
+    const [rows, fields] = await connection.execute('delete from users where id=?', [id])
 }
 
 module.exports = {
     createNewUser,
-    getUserList
+    getUserList,
+    deleteUser
 }
 

@@ -1,28 +1,34 @@
+const { deleteUser } = require('../services/userService')
+
 userService = require('../services/userService')
 
 const index = (req, res) => {
     return res.render('home.ejs')
 }
 
-const handelUsersPage = async (req, res) => {
+const handleUsersPage = async (req, res) => {
     let userList = await userService.getUserList()
-
-    console.log(userList)
     return res.render('users.ejs', { userList })
 }
 
-const handelCreateNewUser = (req, res) => {
+const handleCreateNewUser = async (req, res) => {
     let email = req.body.email
     let password = req.body.password
     let username = req.body.username
 
-    userService.createNewUser(email, password, username)
+    await userService.createNewUser(email, password, username)
 
-    return res.send(req.body)
+    return res.redirect('/user')
+}
+
+const handleDeleteUser = async (req, res) => {
+    await userService.deleteUser(req.params.id)
+    return res.redirect('/user')
 }
 
 module.exports = {
     index,
-    handelUsersPage,
-    handelCreateNewUser
+    handleUsersPage,
+    handleCreateNewUser,
+    handleDeleteUser
 }

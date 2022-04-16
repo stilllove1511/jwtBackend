@@ -17,7 +17,7 @@
     <div class="container">
         <div class="row">
             <div class="user-infor-container">
-                <form method="POST" action="/users/create-user">
+                <form method="POST" action="/user/create-user">
 
                     <h3>Create new user</h3>
 
@@ -67,7 +67,9 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-warning">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                    <form style="display:inline" action="/delete-user/<%= item.id %>>" method="post">
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             <% }) %>
