@@ -6,3 +6,5 @@ module.exports = {
     'models-path': path.resolve('./src/models', 'models'),
     'seeders-path': path.resolve('./src/seeders', 'seeders')
 }
+
+// mở gitbash và gõ: node_modules/.bin/sequelize init

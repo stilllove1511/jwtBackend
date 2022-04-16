@@ -1,5 +1,6 @@
 const express = require('express')
 require("dotenv").config()
+// const { connection } = require('./config/connectDB')
 
 const configViewEngine = require("./config/viewEngine")
 const initWebRoutes = require("./routes/web")
@@ -12,6 +13,9 @@ configViewEngine(app)
 
 //body-parser
 app.use(express.urlencoded())
+
+//test connection
+// connection()
 
 //init web routes
 initWebRoutes(app)
