@@ -7,4 +7,4 @@ module.exports = {
     'seeders-path': path.resolve('./src/seeders', 'seeders')
 }
 
-// mở gitbash và gõ: node_modules/.bin/sequelize init
+// mở gitbash (hoặc chạy cmd dưới quyền admin) và gõ: node_modules/.bin/sequelize init
