@@ -2,6 +2,7 @@ const express = require('express')
 const { Router } = require('express')
 
 const homeController = require('../controllers/homeConrtroller')
+const apiController = require('../controllers/apiController')
 const router = express.Router()
 
 /**
@@ -16,6 +17,7 @@ const initWebRoutes = (app) => {
     router.post('/delete-user/:id', homeController.handleDeleteUser)
     router.get('/update-user/:id', homeController.getUpdateUserPage)
     router.post('/user/update-user/', homeController.handleUpdateUser)
+    router.get('/api/test-api', apiController.testApi)
     return app.use("/", router)
 }
 
