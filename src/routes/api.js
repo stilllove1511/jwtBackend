@@ -12,6 +12,7 @@ const initApiRoutes = (app) => {
     //path handler
     router.get('/test-api', apiController.testApi)
     router.post('/register', apiController.handleRegister)
+    router.post('/login', apiController.handelLogin)
     return app.use("/api/v1/", router)
 }
 
