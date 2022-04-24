@@ -1,13 +1,70 @@
 const db = require('../models/index')
+const bcrypt = require('bcryptjs');
 
+const salt = bcrypt.genSaltSync(10);
 
-const createNewUser = async (email, password, username) => {
+const hashUserPassword = (userPassword) => {
+    let hashPassword = bcrypt.hashSync(userPassword, salt);
+    return hashPassword
+}
+
+const checkEmailExist = async (userEmail) => {
+    let user = await db.User.findOne({
+        where: { email: userEmail }
+    })
+
+    if (user) {
+        return true
+    }
+    return false
+}
+
+const checkPhoneExist = async (userPhone) => {
+    let user = await db.User.findOne({
+        where: { phone: userPhone }
+    })
+
+    if (user) {
+        return true
+    }
+    return false
+}
+
+const createNewUser = async (data) => {
     try {
-        await db.User.create({
+        let isEmailExist = await checkEmailExist(data.email)
 
-        })
+        if (isEmailExist) {
+            return {
+                EM: 'the email is already exist',
+                EC: 1
+            }
+        }
+
+        let isPhoneExist = await checkPhoneExist(data.phone)
+
+        if (isPhoneExist) {
+            return {
+                EM: 'the phone number is already exist',
+                EC: 1
+            }
+        }
+
+        let hashPassword = hashUserPassword(data.password)
+
+        await db.User.create({ ...data, password: hashPassword })
+        return {
+            EM: 'create user success',
+            EC: 0,
+            DT: []
+        }
     } catch (error) {
         console.log(error)
+        return {
+            EM: 'something wrong in service ...',
+            EC: 0,
+            DT: []
+        }
     }
 }
 
