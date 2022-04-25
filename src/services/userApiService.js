@@ -97,6 +97,7 @@ const getUserWithPagination = async (page, limit) => {
             limit: limit,
             attributes: ["id", "username", "email", "phone", "sex"],
             include: { model: db.Group, attributes: ["name", "description"] },
+            order: [['id', 'DESC']]
         })
 
         let totalPages = Math.ceil(count / limit)
@@ -115,18 +116,40 @@ const getUserWithPagination = async (page, limit) => {
         return {
             EM: 'some thing wrong in service ...',
             EC: 1,
-            DT: []
+            DT: 'email'
         }
     }
 }
 
-const updateUser = async (email, password, username) => {
+const updateUser = async (data) => {
     try {
-        await db.User.update({
-
-        })
+        if (!data.groupId) {
+            return {
+                EM: 'empty group id',
+                EC: 1,
+                DT: 'group'
+            }
+        }
+        await db.User.update(
+            {
+                ...data
+            },
+            {
+                where: { id: data.id }
+            }
+        )
+        return {
+            EM: 'update ok',
+            EC: 0,
+            DT: []
+        }
     } catch (error) {
         console.log(error)
+        return {
+            EM: 'some thing wrong in service ...',
+            EC: 1,
+            DT: []
+        }
     }
 }
 
