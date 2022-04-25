@@ -4,6 +4,8 @@ const { Router } = require('express')
 const apiController = require('../controllers/apiController')
 const userController = require('../controllers/userController')
 const groupController = require('../controllers/groupController')
+
+const { checkUserJWT, checkUserPermission } = require('../middleware/JWTAction')
 const router = express.Router()
 
 /**
@@ -16,7 +18,7 @@ const initApiRoutes = (app) => {
     router.post('/register', apiController.handleRegister)
     router.post('/login', apiController.handleLogin)
 
-    router.get('/users/read', userController.readFunc)
+    router.get('/users/read', checkUserJWT, checkUserPermission, userController.readFunc)
     router.post('/users/create', userController.createFunc)
     router.put('/users/update', userController.updateFunc)
     router.delete('/users/delete', userController.deleteFunc)
