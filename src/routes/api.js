@@ -14,7 +14,7 @@ const initApiRoutes = (app) => {
     //path handler
     router.get('/test-api', apiController.testApi)
     router.post('/register', apiController.handleRegister)
-    router.post('/login', apiController.handelLogin)
+    router.post('/login', apiController.handleLogin)
 
     router.get('/users/read', userController.readFunc)
     router.post('/users/create', userController.createFunc)

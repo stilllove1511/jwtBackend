@@ -44,9 +44,11 @@ const handleRegister = async (req, res) => {
     }
 }
 
-const handelLogin = async (req, res) => {
+const handleLogin = async (req, res) => {
     try {
         let data = await loginRegisterService.handelUserLogin(req.body)
+        //set cookie
+        res.cookie('jwt', data.DT.access_token, { httpOnly: true, maxAge: 60 * 60 * 1000 })
         return res.status(200).json({
             EM: data.EM, //error message
             EC: data.EC,//error code
@@ -65,5 +67,5 @@ const handelLogin = async (req, res) => {
 module.exports = {
     testApi,
     handleRegister,
-    handelLogin
+    handleLogin
 }
