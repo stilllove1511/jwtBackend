@@ -106,7 +106,7 @@ const handelUserLogin = async (rawData) => {
                 let payload = {
                     email: user.email,
                     groupWithRoles,
-                    expiresIn: process.env.JWT_EXPIRES_IN
+                    username: user.usrename
                 }
                 let token = createJWT(payload)
                 return {
@@ -114,7 +114,9 @@ const handelUserLogin = async (rawData) => {
                     EC: 0,
                     DT: {
                         access_token: token,
-                        groupWithRoles
+                        groupWithRoles,
+                        email: user.email,
+                        username: user.username
                     }
                 }
             }

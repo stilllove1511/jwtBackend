@@ -7,7 +7,9 @@ const createJWT = (payload) => {
     let key = process.env.JWT_SECRET
     let token = null
     try {
-        token = jwt.sign(payload, key)
+        token = jwt.sign(payload, key, {
+            expiresIn: process.env.JWT_EXPIRES_IN
+        })
     } catch (err) {
         console.log(err)
     }
@@ -37,6 +39,7 @@ const checkUserJWT = (req, res, next) => {
         let decoded = verifyToken(token)
         if (decoded) {
             req.user = decoded
+            req.token = token
             next()
         } else {
             return res.status(401).json({
@@ -55,7 +58,7 @@ const checkUserJWT = (req, res, next) => {
 }
 
 const checkUserPermission = (req, res, next) => {
-    if (nonSecurePaths.includes(req.path)) {
+    if (nonSecurePaths.includes(req.path) || req.path == '/account') {
         return next()
     }
 
@@ -63,6 +66,7 @@ const checkUserPermission = (req, res, next) => {
         let email = req.user.email
         let roles = req.user.groupWithRoles.Roles
         let currentUrl = req.path
+        console.log(req.path)
         if (!roles || roles.length === 0) {
             return res.status(403).json({
                 EC: -1,
@@ -71,10 +75,12 @@ const checkUserPermission = (req, res, next) => {
             })
         }
 
+
         let canAccess = roles.some(item => item.url === currentUrl)
         if (canAccess) {
             next()
         } else {
+            console.log('You dont have permisson to this resource')
             return res.status(403).json({
                 EC: -1,
                 DT: '',
