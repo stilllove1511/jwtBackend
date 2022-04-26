@@ -49,7 +49,7 @@ const handleLogin = async (req, res) => {
         let data = await loginRegisterService.handelUserLogin(req.body)
         //set cookie
         if (data && data.DT && data.DT.access_token) {
-            res.cookie('jwt', data.DT.access_token, { httpOnly: true, maxAge: 3600 * 1000 })
+            res.cookie('jwt', data.DT.access_token, { httpOnly: false, maxAge: 3600 * 1000 })
         }
         return res.status(200).json({
             EM: data.EM, //error message
