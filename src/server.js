@@ -10,7 +10,7 @@ const initApiRoutes = require('./routes/api')
 const { configCors } = require('./config/cors')
 
 const app = express()
-const hostname = process.env.IP;
+const hostname = 'localhost';
 const PORT = process.env.PORT || 8080
 
 //config cors
@@ -38,5 +38,5 @@ app.use((req, res) => {
 })
 
 app.listen(PORT, hostname, () => {
-    console.log(">>> JWT Backend is running o the port = " + PORT)
+    console.log(">>> JWT Backend is running on the port = " + PORT)
 })
