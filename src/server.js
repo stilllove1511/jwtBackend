@@ -37,6 +37,6 @@ app.use((req, res) => {
     return res.send('404 not found')
 })
 
-app.listen(PORT, hostname, () => {
+app.listen(PORT, () => {
     console.log(">>> JWT Backend is running on the port = " + PORT)
 })
