@@ -1,5 +1,0 @@
-{
-    "presets": [
-        "@bavel/preset-env"
-    ]
-}
