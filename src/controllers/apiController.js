@@ -1,6 +1,5 @@
 const loginRegisterService = require('../services/loginRegisterService')
 
-
 const testApi = (req, res) => {
     return res.status(200).json({
         message: 'ok',
