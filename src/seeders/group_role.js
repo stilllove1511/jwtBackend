@@ -37,6 +37,10 @@ module.exports = {
                 {
                     groupId: "4",
                     roleId: "2"
+                },
+                {
+                    groupId: "4",
+                    roleId: "5"
                 }
             ],
             {}
