@@ -26,4 +26,4 @@ npm start
 
 ## Database
 
-Config database in [a relative link](src/config/config.json) (development)
+Config database [here](src/config/config.json) (development)
